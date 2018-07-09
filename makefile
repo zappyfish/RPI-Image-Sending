@@ -1,7 +1,4 @@
-all :  ov2640_capture ov5642_capture ov5640_capture ov2640_4cams_capture ov5640_4cams_capture ov5642_4cams_capture
-VPATH= ../../../ArduCAM
-INCLUDE1 = -I../../../ArduCAM -I./
-INCLUDE2 =-I./ -I../../../ArduCAM
+all :  ov2640_capture
 CFLAGS = `pkg-config --cflags opencv`
 LIBS = `pkg-config --libs opencv`
 objects = ArduCAM.o arducam_arch_raspberrypi.o
@@ -12,7 +9,7 @@ ov2640_capture : $(objects) arducam_ov2640_capture.o transmit.cpp capture.cpp co
 
 
 ArduCAM.o : ArduCAM.cpp
-	g++ $(INCLUDE1) -c $(VPATH)/ArduCAM.cpp
+	g++ $(INCLUDE1) -c ArduCAM.cpp
 arducam_arch_raspberrypi.o : arducam_arch_raspberrypi.c
 	g++ $(INCLUDE2) -c arducam_arch_raspberrypi.c
 
