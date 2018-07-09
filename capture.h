@@ -36,6 +36,6 @@ public:
 private:
 
   transmit transmitter;
-  ArduCAM myCAM(OV2640,CAM1_CS);
+  ArduCAM myCAM;
 
 };
