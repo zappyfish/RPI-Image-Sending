@@ -2,6 +2,7 @@
 
 capture::capture()
 {
+	myCAM = ArduCAM(OV2640,CAM1_CS);
 	uint8_t vid, pid;
 	wiring_init();
 	pinMode(CAM1_CS, OUTPUT);
