@@ -2,7 +2,7 @@
 #define _MEMORYSAVER_
 
 //Only when using raspberry,enable it
-//#define RASPBERRY_PI
+#define RASPBERRY_PI
 
 //There are two steps you need to modify in this file before normal compilation
 //Only ArduCAM Shield series platform need to select camera module, ArduCAM-Mini series platform doesn't
