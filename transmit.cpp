@@ -48,7 +48,7 @@ void transmit::transmitRGBPreCompressed(uchar *compressedImage, int size) {
 
 void transmit::transmitImage(uchar* uncompressedImage, int width, int height, int quality) {
 	uchar* jpegBuf = nullptr;
-	int jpegSize = compressor.compressBandJpeg(uncompressedAr, &jpegBuf, width, height, quality);
+	int jpegSize = compressor.compressBandJpeg(uncompressedImage, &jpegBuf, width, height, quality);
 	// Indicate 1-band image with I
 	loadBuffer(jpegBuf, jpegSize, 'I', true);
 }

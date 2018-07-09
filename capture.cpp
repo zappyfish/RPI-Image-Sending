@@ -7,7 +7,7 @@ capture::capture()
 	pinMode(CAM1_CS, OUTPUT);
 	// Check if the ArduCAM SPI bus is OK
 	myCAM.write_reg(ARDUCHIP_TEST1, 0x72);
-	temp = myCAM.read_reg(ARDUCHIP_TEST1);
+	uint8_t temp = myCAM.read_reg(ARDUCHIP_TEST1);
 	if(temp != 0x72) {
 			printf("SPI interface error!\n");
 			exit(EXIT_FAILURE);
@@ -26,7 +26,6 @@ capture::capture()
 			printf("OV2640 detected\n");
 	}
 
-	setup();
 	myCAM.set_format(JPEG);
 	myCAM.InitCAM();
 }
@@ -36,6 +35,7 @@ capture::~capture()
 }
 
 void capture::startCaptureAndTransmit() {
+	uint8_t* buf;
 	while(1) {
 		myCAM.flush_fifo();
 		// Clear the capture done flag
@@ -62,11 +62,10 @@ void capture::startCaptureAndTransmit() {
 
 		while ( length-- )
 		{
-			temp =  myCAM.read_reg(0x3D);
-			buf[i++] = temp;
+			buf[i++] = myCAM.read_reg(0x3D);
 		}
 		// Don't need to free buf because transmit class takes care of it
-		myTransmit.transmitRGBPreCompressed(buf, size);
+	transmitter.transmitRGBPreCompressed(buf, size);
 	}
 }
 
