@@ -3,7 +3,7 @@
 int main() {
   capture myCapture;
 
-  capture.startCaptureAndTransmit();
+  myCapture.startCaptureAndTransmit();
 
   return 0;
 }
