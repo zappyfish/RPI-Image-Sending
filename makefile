@@ -5,7 +5,7 @@ objects = ArduCAM.o arducam_arch_raspberrypi.o
 
 
 main : $(objects) main.cpp transmit.cpp capture.cpp compress.cpp
-	g++ $(CFLAGS) $(LIBS) -o main $(objects) arducam_ov2640_capture.o transmit.cpp capture.cpp compress.cpp -l pthread -lturbojpeg -lwiringPi -Wall
+	g++ $(CFLAGS) $(LIBS) -o main $(objects) transmit.cpp capture.cpp compress.cpp -l pthread -lturbojpeg -lwiringPi -Wall
 
 
 ArduCAM.o : ArduCAM.cpp
