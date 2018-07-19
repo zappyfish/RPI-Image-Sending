@@ -54,8 +54,27 @@ uint8_t* sentera::assemblePacket(uint8_t type, uint16_t length, uint8_t *payload
   packet[2] = type;
   packet[3] = (length & 0xff);
   packet[4] = (length >> 8) & 0xff;
-  for (int i = 0; i < length; ++) {
-    packet[5 + i] = payload[i];
-  }
+
   uint8_t crc = 0;
+
+  for (int i = 0; i < length; ++i) {
+    uint8_t b = payload[i];
+    packet[5 + i] = b;
+    for (int bit = 7; bit >= 0; --bit) {
+      if ((crc & 0x80) != 0) {   /* MSB set, shift it out of the register */
+          crc = (byte)(crc << 1);
+          /* shift in next bit of input stream:
+           * If it's 1, set LSB of crc to 1.
+           * If it's 0, set LSB of crc to 0. */
+          crc = ((byte)(b & (1 << i)) != 0) ? (byte)(crc | 0x01) : (byte)(crc & 0xFE);
+          /* Perform the 'division' by XORing the crc register with the generator polynomial */
+          crc = (byte)(crc ^ GENERATOR_POLYNOMIAL);
+      } else {   /* MSB not set, shift it out and shift in next bit of input stream. Same as above, just no division */
+          crc = (byte)(crc << 1);
+          crc = ((byte)(b & (1 << i)) != 0) ? (byte)(crc | 0x01) : (byte)(crc & 0xFE);
+      }
+    }
+  }
+  packet[length + 2 + 2 + 1] = crc;
+  return packet;
 }
