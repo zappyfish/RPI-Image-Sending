@@ -1,6 +1,6 @@
 #include "sentera.h"
 #include <iostream>
-#include <cpprest/http_client.h>
+// #include <cpprest/http_client.h>
 
 using namespace web::http;                  // Common HTTP functionality
 using namespace web::http::client;
