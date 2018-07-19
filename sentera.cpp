@@ -42,11 +42,20 @@ void sentera::startCaptureAndTransmit() {
   while (1) {
     startCapture();
     std::string url = nullptr;
-    while ((url = getCaptureUrl()_ == nullptr);
+    while ((url = getCaptureUrl()) == nullptr);
     getImageAndTransmit(url);
   }
 }
 
 uint8_t* sentera::assemblePacket(uint8_t type, uint16_t length, uint8_t *payload) {
-
+  uint8_t *packet = new packet[length + 2 + 2 + 1 + 1];
+  packet[0] = HEADER_ZERO;
+  packet[1] = HEADER_ONE;
+  packet[2] = type;
+  packet[3] = (length & 0xff);
+  packet[4] = (length >> 8) & 0xff;
+  for (int i = 0; i < length; ++) {
+    packet[5 + i] = payload[i];
+  }
+  uint8_t crc = 0;
 }
