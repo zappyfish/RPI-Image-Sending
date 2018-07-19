@@ -1,4 +1,9 @@
 #include "sentera.h"
+#include <iostream>
+#include <cpprest/http_client.h>
+
+using namespace web::http;                  // Common HTTP functionality
+using namespace web::http::client;
 
 void sentera::sentera() {
   sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -61,7 +66,14 @@ void sentera::parseForUrl(char* buf, char *urlBuf) {
 
 // Using url, grab the image then transmit it
 void sentera::getImageAndTransmit(std::string requestString) {
+  http_client client(requestString);
+  http_response response;
+  response = client.request(methods::GET, "/get").get();
 
+  char *image = new char[response.extract_string().size()];
+  strcpy(image, response.extract_string());
+
+  transmitter.transmitRGBPreCompressed(image, response.extract_string.size());
 }
 
 std::string createRequestString(char* urlBuf) {
