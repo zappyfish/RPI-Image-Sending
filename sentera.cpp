@@ -24,7 +24,7 @@ void sentera::~sentera() {
 
 // Send start capture command
 void sentera::startCapture() {
-
+  int ret = sock()
 }
 
 // Return null if no data available yet, url otherwise
@@ -48,18 +48,22 @@ void sentera::startCaptureAndTransmit() {
 }
 
 uint8_t* sentera::assemblePacket(uint8_t type, uint16_t length, uint8_t *payload) {
-  uint8_t *packet = new packet[length + 2 + 2 + 1 + 1];
+  // payload length + 2 headers + 2 byte length + crc + type
+  uint8_t *packet = new uint8_t[length + 2 + 2 + 1 + 1];
   packet[0] = HEADER_ZERO;
   packet[1] = HEADER_ONE;
   packet[2] = type;
   packet[3] = (length & 0xff);
   packet[4] = (length >> 8) & 0xff;
 
-  uint8_t crc = 0;
 
   for (int i = 0; i < length; ++i) {
-    uint8_t b = payload[i];
-    packet[5 + i] = b;
+    packet[5 + i] = payload[i];
+  }
+
+  uint8_t crc = 0;
+  for (int i = 2; i < 2 + 2 + length; ++i) {
+    uint8_t b = packet[i];
     for (int bit = 7; bit >= 0; --bit) {
       if ((crc & 0x80) != 0) {   /* MSB set, shift it out of the register */
           crc = (uint8_t)(crc << 1);
@@ -75,6 +79,7 @@ uint8_t* sentera::assemblePacket(uint8_t type, uint16_t length, uint8_t *payload
       }
     }
   }
+
   packet[length + 2 + 2 + 1] = crc;
   return packet;
 }
