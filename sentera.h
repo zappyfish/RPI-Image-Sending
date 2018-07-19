@@ -68,5 +68,5 @@ private:
   struct sockaddr_in address;
   int sock;
 
-  const std::string sessionName;
+  std::string sessionName;
 };

@@ -106,7 +106,7 @@ void sentera::startCaptureAndTransmit() {
 
 char* sentera::assemblePacket(uint8_t type, uint16_t length, char *payload) {
   // payload length + 2 headers + 2 byte length + crc + type
-  char *packet = new uint8_t[length + 2 + 2 + 1 + 1];
+  char *packet = new char[length + 2 + 2 + 1 + 1];
   packet[0] = HEADER_ZERO;
   packet[1] = HEADER_ONE;
   packet[2] = type;
