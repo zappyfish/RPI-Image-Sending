@@ -72,18 +72,18 @@ void sentera::getImageAndTransmit(std::string requestString) {
   http_response response;
   response = client.request(methods::GET).get(); // unsure of arguments to this request method
 
-  char *image = new char[response.extract_string().size()];
-  strcpy(image, response.extract_string());
+  char *image = new char[response.extract_string().get().size()];
+  strcpy(image, response.extract_string().get());
 
   // transmitter.transmitRGBPreCompressed(image, response.extract_string.size());
 }
 
-std::string createRequestString(char* urlBuf) {
+std::string sentera::createRequestString(char* urlBuf) {
   std::string requestString("http://");
   requestString += IP;
   requestString += ":";
   requestString += PORT;
-  requestString += "/"
+  requestString += "/";
   requestString += sessionName;
   requestString += "?path=/";
   requestString += urlBuf;
