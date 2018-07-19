@@ -81,6 +81,9 @@ KnownHeightAGLMeters: 5.21208
 NetworkConfig:
   Camera:
     IP: 192.168.143.141
+    MulticastIP: 239.192.143.140
+    RxPort: 60530
+    TxPort: 60531
   WifiAP:
     Channel: 9
     Enabled: true
@@ -202,7 +205,7 @@ SourceConfig:
         RxPort: 60590
 TriggerConfig:
   IntervalConfig:
-    IntervalSeconds: 5.0
+    IntervalSeconds: 2.0
   LocationTriggerConfig:
     AutoHeightOverlapConfig:
       MinimumTriggerHeightAGLMeters: 10.0
@@ -211,4 +214,4 @@ TriggerConfig:
       TriggerDistanceMeters: 10.0
     KnownHeightOverlapConfig:
       OverlapPercent: 70.0
-  TriggerType: COMMAND
+  TriggerType: INTERVAL
