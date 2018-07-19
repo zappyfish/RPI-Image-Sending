@@ -5,7 +5,7 @@
 using namespace web::http;                  // Common HTTP functionality
 using namespace web::http::client;
 
-void sentera::sentera() {
+sentera::sentera() {
   sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
 	memset((char *)&address, 0, sizeof(address));
@@ -21,9 +21,11 @@ void sentera::sentera() {
 	{
 		printf("failed to bind socket (%s)\n", strerror(errno)); // Cannot assign requested address
 	}
+
+  sessionName = std::string("test");
 }
 
-void sentera::~sentera() {
+sentera::~sentera() {
 
 }
 

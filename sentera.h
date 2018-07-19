@@ -48,8 +48,8 @@
 
 class sentera {
 public:
-  void sentera();
-  void ~sentera();
+  sentera();
+  ~sentera();
   void startCaptureAndTransmit();
 private:
   void startCapture();
@@ -59,8 +59,8 @@ private:
 
   uint8_t* assemblePacket(uint8_t type, uint16_t length, uint8_t *payload);
 
-  transmit transmitter;
+  // transmit transmitter;
   struct sockaddr_in address;
 
-  const std::string sessionName("test");
-}
+  const std::string sessionName;
+};
