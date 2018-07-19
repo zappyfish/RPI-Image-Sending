@@ -67,6 +67,7 @@ void sentera::parseForUrl(char* buf, char *urlBuf) {
 }
 
 // Using url, grab the image then transmit it
+/*
 void sentera::getImageAndTransmit(std::string requestString) {
   http_client client(requestString);
   http_response response;
@@ -78,7 +79,7 @@ void sentera::getImageAndTransmit(std::string requestString) {
   }
 
   // transmitter.transmitRGBPreCompressed(image, response.extract_string.size());
-}
+}*/
 
 std::string sentera::createRequestString(char* urlBuf) {
   std::string requestString("http://");
