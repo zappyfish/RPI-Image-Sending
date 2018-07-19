@@ -125,7 +125,7 @@ char* sentera::assemblePacket(uint8_t type, uint16_t length, char *payload) {
 }
 
 // You need to pass in the correct address to ar
-uint8_t sentera::calcCRC(uint8_t *arStart, int length) {
+uint8_t sentera::calcCRC(char *arStart, int length) {
   uint8_t crc = 0;
   for(int i = 0; i < length; ++i) {
     uint8_t b = arStart[i];

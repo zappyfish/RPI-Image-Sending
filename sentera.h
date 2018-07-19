@@ -58,7 +58,7 @@ private:
   void startCapture();
   bool getCaptureUrl(char *urlBuf);
   void getImageAndTransmit(std::string requestString);
-  uint8_t calcCRC(uint8_t *arStart, int length);
+  uint8_t calcCRC(char *arStart, int length);
   std::string createRequestString(char* urlBuf);
   void parseForUrl(char* buf, char *urlBuf);
 
