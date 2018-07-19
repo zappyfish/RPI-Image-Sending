@@ -53,7 +53,7 @@ public:
 private:
   void startCapture();
   bool getCaptureUrl(char *urlBuf);
-  void getImageAndTransmit(char *urlBuf);
+  void getImageAndTransmit(std::string requestString);
   void calcCRC(uint8_t *arStart, int length);
 
   uint8_t* assemblePacket(uint8_t type, uint16_t length, uint8_t *payload);

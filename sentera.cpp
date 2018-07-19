@@ -60,7 +60,7 @@ void sentera::parseForUrl(char* buf, char *urlBuf) {
 }
 
 // Using url, grab the image then transmit it
-void sentera::getImageAndTransmit(char* urlBuf) {
+void sentera::getImageAndTransmit(std::string requestString) {
 
 }
 
