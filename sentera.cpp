@@ -2,8 +2,8 @@
 #include <iostream>
 // #include <cpprest/http_client.h>
 
-using namespace web::http;                  // Common HTTP functionality
-using namespace web::http::client;
+// using namespace web::http;                  // Common HTTP functionality
+// using namespace web::http::client;
 
 sentera::sentera() {
   sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
