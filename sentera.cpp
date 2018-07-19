@@ -50,7 +50,7 @@ void sentera::startCapture() {
 // Return false if no data available yet, true otherwise
 bool sentera::getCaptureUrl(char *urlBuf) {
   char buf[1000];
-  recvfrom(sock, buf, sizeof(buf) - 1, 0, (const struct sockaddr*)&address, sizeof(struct socketaddr_in));
+  recvfrom(sock, buf, sizeof(buf) - 1, 0, (const struct sockaddr*)&address, sizeof(struct sockaddr_in));
   uint8_t type = buf[2];
   if (type == GET_IMAGE_DATA_READY) {
     parseForUrl(buf, urlBuf);
