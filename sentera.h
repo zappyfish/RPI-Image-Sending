@@ -13,7 +13,7 @@
 
 #define HEADER_ZERO 0x46
 #define HEADER_ONE 0x57
-#define GENERATOR_POLYNOMIAL 0x87
+#define GENERATOR_POLYNOMIAL 0x87 // This might have to be 0x07??
 
 class sentera {
 public:
