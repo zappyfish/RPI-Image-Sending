@@ -1,9 +1,9 @@
-#include "capture.h"
+#include "sentera.h"
 
 int main() {
-  capture myCapture;
+  sentera mySentera;
 
-  myCapture.startCaptureAndTransmit();
+  mySentera.startCaptureAndTransmit();
 
   return 0;
 }
