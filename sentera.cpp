@@ -40,7 +40,7 @@ void sentera::startCapture() {
   }
   payload[ind] = "\0"; // null terminate string
   uint8_t *packet = assemblePacket(SET_STILL_CAPTURE, payload_length, payload);
-  uint16_t total_length
+  uint16_t total_length = payload_length + 2 + 1 + 2 + 1;
   int ret = sendto(sock, (char *)packet, 1, 0, (const struct sockaddr*) &address, sizeof(struct sockaddr_in));
   delete[] packet;
 }
