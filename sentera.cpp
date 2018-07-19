@@ -73,7 +73,7 @@ void sentera::getImageAndTransmit(std::string requestString) {
   char *image = new char[response.extract_string().size()];
   strcpy(image, response.extract_string());
 
-  transmitter.transmitRGBPreCompressed(image, response.extract_string.size());
+  // transmitter.transmitRGBPreCompressed(image, response.extract_string.size());
 }
 
 std::string createRequestString(char* urlBuf) {

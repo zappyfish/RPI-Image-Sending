@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
+#include <string>
 
 #define IP "192.168.143.141"
 #define PORT "8080"
@@ -47,8 +48,8 @@
 
 class sentera {
 public:
-  void sentera()
-  void ~sentera()
+  void sentera();
+  void ~sentera();
   void startCaptureAndTransmit();
 private:
   void startCapture();
