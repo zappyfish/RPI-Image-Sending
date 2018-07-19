@@ -68,7 +68,7 @@ void sentera::parseForUrl(char* buf, char *urlBuf) {
 void sentera::getImageAndTransmit(std::string requestString) {
   http_client client(requestString);
   http_response response;
-  response = client.request(methods::GET, "/get").get();
+  response = client.request(methods::GET).get(); // unsure of arguments to this request method
 
   char *image = new char[response.extract_string().size()];
   strcpy(image, response.extract_string());
@@ -92,11 +92,11 @@ std::string createRequestString(char* urlBuf) {
 void sentera::startCaptureAndTransmit() {
   while (1) {
     startCapture();
-    std::string url = nullptr;
     char urlBuf[IMAGE_DATA_READY_LENGTH];
     while (!getCaptureUrl(urlBuf));
     std::string requestString = createRequestString(urlBuf);
-    getImageAndTransmit(requestString);
+    std::cout << requestString << std::endl;
+    // getImageAndTransmit(requestString);
   }
 }
 
