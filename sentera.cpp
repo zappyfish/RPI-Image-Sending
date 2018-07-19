@@ -36,12 +36,24 @@ void sentera::startCapture() {
 }
 
 // Return null if no data available yet, url otherwise
-std::string sentera::getCaptureUrl() {
+bool sentera::getCaptureUrl(char *urlBuf) {
+  char buf[1000];
+  recvfrom(sock, buf, sizeof(buf) - 1, 0, (const struct sockaddr*)&address, sizeof(struct socketaddr_in));
+  uint8_t type = buf[2];
+  if (type == GET_IMAGE_DATA_READY) {
+    parseForUrl(buf, urlBuf);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void sentera::parseForUrl(char* buf) {
 
 }
 
 // Using url, grab the image then transmit it
-void sentera::getImageAndTransmit() {
+void sentera::getImageAndTransmit(char* urlBuf) {
 
 }
 
@@ -50,8 +62,9 @@ void sentera::startCaptureAndTransmit() {
   while (1) {
     startCapture();
     std::string url = nullptr;
-    while ((url = getCaptureUrl()) == nullptr);
-    getImageAndTransmit(url);
+    char urlBuf[IMAGE_DATA_READY_LENGTH];
+    while (!getCaptureUrl(urlBuf));
+    getImageAndTransmit(urlBuf);
   }
 }
 

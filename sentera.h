@@ -14,6 +14,7 @@
 #define HEADER_ZERO 0x46
 #define HEADER_ONE 0x57
 #define GENERATOR_POLYNOMIAL 0x87 // This might have to be 0x07??
+#define IMAGE_DATA_READY_LENGTH 53
 
 // PACKET HEADERS - TO PAYLOAD
 #define SET_AIRCRAFT_MEDATADA 0x01 // To Payload Aircraft Metadata
@@ -50,12 +51,13 @@ public:
   void startCaptureAndTransmit();
 private:
   void startCapture();
-  std::string getCaptureUrl();
-  void getImageAndTransmit();
+  bool getCaptureUrl(char *urlBuf);
+  void getImageAndTransmit(char *urlBuf);
   void calcCRC(uint8_t *arStart, int length);
 
   uint8_t* assemblePacket(uint8_t type, uint16_t length, uint8_t *payload);
 
   transmit transmitter;
+  struct sockaddr_in address;
 
 }
