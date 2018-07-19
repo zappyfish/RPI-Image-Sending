@@ -32,16 +32,16 @@ sentera::~sentera() {
 // Send start capture command
 void sentera::startCapture() {
   uint16_t payload_length = 142;
-  uint8_t payload[payload_length];
+  char payload[payload_length];
   for (uint16_t i = 0; i < payload_length; ++i) {
-    payload[i] = 0;
+    payload[i] = (char)0;
   }
   int ind = 0;
   while ((ind++) < sessionName.size()) {
     payload[ind] = sessionName.at(ind - 1);
   }
-  payload[ind] = "\0"; // null terminate string
-  uint8_t *packet = assemblePacket(SET_STILL_CAPTURE, payload_length, payload);
+  payload[ind] = '\0'; // null terminate string
+  char *packet = assemblePacket(SET_STILL_CAPTURE, payload_length, payload);
   uint16_t total_length = payload_length + 2 + 1 + 2 + 1;
   int ret = sendto(sock, (char *)packet, total_length, 0, (const struct sockaddr*) &address, sizeof(struct sockaddr_in));
   delete[] packet;
@@ -102,9 +102,9 @@ void sentera::startCaptureAndTransmit() {
   }
 }
 
-uint8_t* sentera::assemblePacket(uint8_t type, uint16_t length, uint8_t *payload) {
+char* sentera::assemblePacket(uint8_t type, uint16_t length, char *payload) {
   // payload length + 2 headers + 2 byte length + crc + type
-  uint8_t *packet = new uint8_t[length + 2 + 2 + 1 + 1];
+  char *packet = new uint8_t[length + 2 + 2 + 1 + 1];
   packet[0] = HEADER_ZERO;
   packet[1] = HEADER_ONE;
   packet[2] = type;

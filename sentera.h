@@ -1,8 +1,11 @@
 #include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
+#include "sys/socket.h"
+#include <arpa/inet.h>
+#include <netinet/in.h> /* Needed for sockaddr_in */
+#include <netdb.h>  /* Needed for getaddrinfo() and freeaddrinfo() */
+#include <unistd.h> /* Needed for close() */
+#include <errno.h> /* Needed for error handling */
+#include <fcntl.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -57,10 +60,11 @@ private:
   void getImageAndTransmit(std::string requestString);
   void calcCRC(uint8_t *arStart, int length);
 
-  uint8_t* assemblePacket(uint8_t type, uint16_t length, uint8_t *payload);
+  uint8_t* assemblePacket(uint8_t type, uint16_t length, char *payload);
 
   // transmit transmitter;
   struct sockaddr_in address;
+  int sock;
 
   const std::string sessionName;
 };
