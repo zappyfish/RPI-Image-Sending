@@ -24,7 +24,15 @@ void sentera::~sentera() {
 
 // Send start capture command
 void sentera::startCapture() {
-  int ret = sock()
+  uint16_t payload_length = 142;
+  uint8_t payload[payload_length];
+  for (uint16_t i = 0; i < payload_length; ++i) {
+    payload[i] = 0;
+  }
+  uint8_t *packet = assemblePacket(SET_STILL_CAPTURE, payload_length, payload);
+  uint16_t total_length
+  int ret = sendto(sock, (char *)packet, 1, 0, (const struct sockaddr*) &address, sizeof(struct sockaddr_in));
+  delete[] packet;
 }
 
 // Return null if no data available yet, url otherwise
