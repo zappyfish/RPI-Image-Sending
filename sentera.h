@@ -59,10 +59,10 @@ private:
   bool getCaptureUrl(char *urlBuf);
   void getImageAndTransmit(std::string requestString);
   uint8_t calcCRC(uint8_t *arStart, int length);
-  std::string createRequestString(char* urlBuf)
+  std::string createRequestString(char* urlBuf);
   void parseForUrl(char* buf, char *urlBuf);
 
-  uint8_t* assemblePacket(uint8_t type, uint16_t length, char *payload);
+  char* assemblePacket(uint8_t type, uint16_t length, char *payload);
 
   // transmit transmitter;
   struct sockaddr_in address;

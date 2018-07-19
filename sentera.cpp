@@ -73,7 +73,9 @@ void sentera::getImageAndTransmit(std::string requestString) {
   response = client.request(methods::GET).get(); // unsure of arguments to this request method
 
   char *image = new char[response.extract_string().get().size()];
-  strcpy(image, response.extract_string().get());
+  for (int i = 0; i < response.extract_string().get().size(); ++i) {
+    image[i] = response.extract_string().get().at(i);
+  }
 
   // transmitter.transmitRGBPreCompressed(image, response.extract_string.size());
 }
@@ -126,19 +128,19 @@ char* sentera::assemblePacket(uint8_t type, uint16_t length, char *payload) {
 uint8_t sentera::calcCRC(uint8_t *arStart, int length) {
   uint8_t crc = 0;
   for(int i = 0; i < length; ++i) {
-    uint8_t b = packet[i];
+    uint8_t b = arStart[i];
     for (int bit = 7; bit >= 0; --bit) {
       if ((crc & 0x80) != 0) {   /* MSB set, shift it out of the register */
           crc = (uint8_t)(crc << 1);
           /* shift in next bit of input stream:
            * If it's 1, set LSB of crc to 1.
            * If it's 0, set LSB of crc to 0. */
-          crc = ((uint8_t)(b & (1 << i)) != 0) ? (byte)(crc | 0x01) : (byte)(crc & 0xFE);
+          crc = ((uint8_t)(b & (1 << i)) != 0) ? (uint8_t)(crc | 0x01) : (uint8_t)(crc & 0xFE);
           /* Perform the 'division' by XORing the crc register with the generator polynomial */
           crc = (uint8_t)(crc ^ GENERATOR_POLYNOMIAL);
       } else {   /* MSB not set, shift it out and shift in next bit of input stream. Same as above, just no division */
           crc = (uint8_t)(crc << 1);
-          crc = ((uint8_t)(b & (1 << i)) != 0) ? (byte)(crc | 0x01) : (byte)(crc & 0xFE);
+          crc = ((uint8_t)(b & (1 << i)) != 0) ? (uint8_t)(crc | 0x01) : (uint8_t)(crc & 0xFE);
       }
     }
   }
