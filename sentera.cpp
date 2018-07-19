@@ -29,13 +29,18 @@ void sentera::startCapture() {
   for (uint16_t i = 0; i < payload_length; ++i) {
     payload[i] = 0;
   }
+  int ind = 0;
+  while ((ind++) < sessionName.size()) {
+    payload[ind] = sessionName.at(ind - 1);
+  }
+  payload[ind] = "\0"; // null terminate string
   uint8_t *packet = assemblePacket(SET_STILL_CAPTURE, payload_length, payload);
   uint16_t total_length
   int ret = sendto(sock, (char *)packet, 1, 0, (const struct sockaddr*) &address, sizeof(struct sockaddr_in));
   delete[] packet;
 }
 
-// Return null if no data available yet, url otherwise
+// Return false if no data available yet, true otherwise
 bool sentera::getCaptureUrl(char *urlBuf) {
   char buf[1000];
   recvfrom(sock, buf, sizeof(buf) - 1, 0, (const struct sockaddr*)&address, sizeof(struct socketaddr_in));
@@ -48,13 +53,27 @@ bool sentera::getCaptureUrl(char *urlBuf) {
   }
 }
 
-void sentera::parseForUrl(char* buf) {
-
+void sentera::parseForUrl(char* buf, char *urlBuf) {
+  for (int i = 0; i < IMAGE_URL_LENGTH; ++i) {
+    urlBuf[i] = buf[i + 1];
+  }
 }
 
 // Using url, grab the image then transmit it
 void sentera::getImageAndTransmit(char* urlBuf) {
 
+}
+
+std::string createRequestString(char* urlBuf) {
+  std::string requestString("http://");
+  requestString += IP;
+  requestString += ":";
+  requestString += PORT;
+  requestString += "/"
+  requestString += sessionName;
+  requestString += "?path=/";
+  requestString += urlBuf;
+  return requestString;
 }
 
 // Capture and transmit loop
@@ -64,7 +83,8 @@ void sentera::startCaptureAndTransmit() {
     std::string url = nullptr;
     char urlBuf[IMAGE_DATA_READY_LENGTH];
     while (!getCaptureUrl(urlBuf));
-    getImageAndTransmit(urlBuf);
+    std::string requestString = createRequestString(urlBuf);
+    getImageAndTransmit(requestString);
   }
 }
 

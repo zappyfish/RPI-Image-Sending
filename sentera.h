@@ -15,6 +15,7 @@
 #define HEADER_ONE 0x57
 #define GENERATOR_POLYNOMIAL 0x87 // This might have to be 0x07??
 #define IMAGE_DATA_READY_LENGTH 53
+#define IMAGE_URL_LENGTH 48
 
 // PACKET HEADERS - TO PAYLOAD
 #define SET_AIRCRAFT_MEDATADA 0x01 // To Payload Aircraft Metadata
@@ -60,4 +61,5 @@ private:
   transmit transmitter;
   struct sockaddr_in address;
 
+  const std::string sessionName("test");
 }
